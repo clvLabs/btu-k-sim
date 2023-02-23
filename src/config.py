@@ -395,11 +395,11 @@ class Config:
     # Overwrite configuration values from yaml file
     Config._load_yaml()
 
-    # Check if data folders do not exist yet (first run)
-    Config._check_resource_folders()
-
     # Check for available resource updates
     Config._check_resource_updates()
+
+    # Check if data folders do not exist yet (first run)
+    Config._check_resource_folders()
 
     # Read instruments/scores/samples
     Config._load_instruments()
