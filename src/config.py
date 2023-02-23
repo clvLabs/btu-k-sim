@@ -263,8 +263,8 @@ class Config:
     print(f"- Comprobando carpetas de recursos")
 
     def _extract_zip(resource_type):
-      _folder = f"{Config.App.data_folder}/{resource_type}"
-      _zip = f"{Config.App.data_folder}/{resource_type}.zip"
+      _folder = Config.App.data_folder / resource_type
+      _zip = Config.App.data_folder / f"{resource_type}.zip"
       if not os.path.isdir(_folder):
         print(f"AVISO: {_folder} no existe, descomprimiendo .ZIP...")
         if not os.path.isfile(_zip):
