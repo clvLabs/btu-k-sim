@@ -11,7 +11,7 @@ Funciones _básicas_:
 |Tecla|Función|
 |---|---|
 |ESC / q|salir|
-|? / h|mostrar ayuda|
+|h|mostrar/ocultar ayuda|
 |SPACE|play/pause|
 |UP|anterior sección|
 |DOWN|siguiente sección|

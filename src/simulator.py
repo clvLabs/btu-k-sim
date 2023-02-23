@@ -162,7 +162,6 @@ class Simulator:
         elif event.key == pygame.K_q:         self.running = False
 
         elif event.key == pygame.K_h:         self.display.toggle_help()
-        elif event.key == pygame.K_QUESTION:  self.display.toggle_help()
 
         elif event.key == pygame.K_HOME:      self.score.go_to_start()
         elif event.key == pygame.K_END:       self.score.go_to_end()
