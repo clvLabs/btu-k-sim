@@ -16,6 +16,8 @@ class Display:
     self.margin = self.cfg.Display.ScoreText.line_height / 2
     pygame.display.set_caption(f"Btu-K simulator")
 
+    self.help_active = False
+
 
   def clear(self):
     self.screen.fill(self.cfg.Display.background_color)
@@ -23,8 +25,66 @@ class Display:
     self.score_txt.reset()
 
 
+  def toggle_help(self):
+    self.help_active = not self.help_active
+
+
   def update(self):
     self.clear()
+    if self.help_active:
+      self.show_help()
+    else:
+      self.show_sim_UI()
+    pygame.display.flip()
+
+
+  def show_help(self):
+    self.header_txt.set_color(self.cfg.Display.HeaderText.Color.highlight)
+    self.header_txt.indent(self.margin)
+    self.header_txt.jump(self.margin)
+
+    txt = f"{self.cfg.App.name} v{self.cfg.App.version} [h:ayuda] "
+    self.header_txt.print(txt, color=self.cfg.Display.HeaderText.Color.title)
+
+    self.header_txt.indent(self.margin * 10)
+    self.header_txt.print("")
+    self.header_txt.print("| Modo normal                          |    | Modo 'jam'                                           |")
+    self.header_txt.print("|----------------|---------------------|    |------------------|-----------------------------------|")
+    self.header_txt.print("| Tecla          | Función             |    | Tecla            | Función                           |")
+    self.header_txt.print("|----------------|---------------------|    |------------------|-----------------------------------|")
+    self.header_txt.print("| ESC / q        | salir               |    | 1...0            | ir a sección                      |")
+    self.header_txt.print("| ? / h          | mostrar ayuda       |    | SHIFT+1...0      | ir a sección (+10)                |")
+    self.header_txt.print("| SPACE          | play/pause          |    | CTRL+1...0       | ir a sección (compás)             |")
+    self.header_txt.print("| UP             | anterior sección    |    | CTRL+SHIFT+1...0 | ir a sección (compás) (+10)       |")
+    self.header_txt.print("| DOWN           | siguiente sección   |    | BACKSPACE        | Eliminar última sección preparada |")
+    self.header_txt.print("| PAGE_UP        | anterior partitura  |                                                            ")
+    self.header_txt.print("| PAGE_DOWN      | siguiente partitura |    NOTAS sobre el modo 'jam':                              ")
+    self.header_txt.print("| 1...0          | ir a sección        |                                                            ")
+    self.header_txt.print("| SHIFT+1...0    | ir a sección (+10)  |    * En modo 'jam', al hacer un cambio de sección, en vez  ")
+    self.header_txt.print("| F1...F12       | mute de una pista   |     de hacer el cambio directamente se espera al final     ")
+    self.header_txt.print("| SHIFT+F1...F12 | solo de una pista   |     de la sección para hacer el cambio automáticamente.    ")
+    self.header_txt.print("| m              | mute (TODAS)        |                                                            ")
+    self.header_txt.print("| +              | más BPM             |    * Usando la tecla CTRL se hace que la sección entre al  ")
+    self.header_txt.print("| -              | menos BPM           |     próximo cambio de compás.                              ")
+    self.header_txt.print("| j              | modo _jam_          |                                                            ")
+    self.header_txt.print("| t              | metrónomo           |    * Se pueden acumular secciones programadas y hacer una  ")
+    self.header_txt.print("| w              | actualizar part.    |    canción pulsando una secuencia de teclas.               ")
+    self.header_txt.print("| SHIFT++        | más BPM (*2)        |")
+    self.header_txt.print("| SHIFT+-        | menos BPM (*2)      |")
+    self.header_txt.print("| ALT++          | más BPM (+1)        |")
+    self.header_txt.print("| ALT+-          | menos BPM (-1)      |")
+    self.header_txt.print("| i              | invertir pistas     |")
+    self.header_txt.print("| r              | reset sección       |")
+    self.header_txt.print("| R              | reset TODAS         |")
+    self.header_txt.print("| LEFT           | 1 1/4 izquierda     |")
+    self.header_txt.print("| RIGHT          | 1 1/4 derecha       |")
+    self.header_txt.print("| SHIFT+LEFT     | 1 1/16 izquierda    |")
+    self.header_txt.print("| SHIFT+RIGHT    | 1 1/16 derecha      |")
+    self.header_txt.print("| HOME           | inicio de sección   |")
+    self.header_txt.print("| END            | fin de sección      |")
+
+
+  def show_sim_UI(self):
     self.header_txt.indent(self.margin)
     self.score_txt.indent(self.margin)
     self.header_txt.jump(self.margin)
@@ -47,8 +107,6 @@ class Display:
     self.score_txt.print()
     self.show_jam_timeline(self.sim.jam_pos)
 
-    pygame.display.flip()
-
 
   def show_header(self):
     if self.sim.jam_mode:
@@ -68,7 +126,7 @@ class Display:
     if self.cfg.AutoUpdate.update_available():
       _warning_str += "[ ACTUALIZACION DISPONIBLE! PULSA w ] "
 
-    txt = f"{self.cfg.App.name} v{self.cfg.App.version} {_warning_str} "
+    txt = f"{self.cfg.App.name} v{self.cfg.App.version} [h:ayuda] {_warning_str} "
     _txt_after_active = ""
     _txt_before_active = ""
     _txt_before_scores = txt
@@ -225,8 +283,3 @@ class Display:
 
     return f"{int(minutes):02}:{int(seconds):02}.{int(milliseconds//10):02}"
 
-
-  def show_help(self):
-
-    rect = pygame.Rect(_x, _y, cfg16.width, cfg16.height)
-    pygame.draw.rect(self.screen, _color, rect)

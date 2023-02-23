@@ -11,6 +11,7 @@ Funciones _básicas_:
 |Tecla|Función|
 |---|---|
 |ESC / q|salir|
+|? / h|mostrar ayuda|
 |SPACE|play/pause|
 |UP|anterior sección|
 |DOWN|siguiente sección|
@@ -52,7 +53,7 @@ Cuando el modo `jam` está activo:
 |1...0|ir a sección cuando termine la sección actual|
 |SHIFT+1...0|ir a sección (+10) cuando termine la sección actual|
 |CTRL+1...0|ir a sección cuando termine el compás actual|
-|SHIFT+CTRL+1...0|ir a sección (+10) cuando termine el compás actual|
+|CTRL+SHIFT+1...0|ir a sección (+10) cuando termine el compás actual|
 |BACKSPACE|Eliminar última sección preparada|
 
 ### Modo `jam`

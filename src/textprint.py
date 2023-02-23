@@ -5,6 +5,7 @@ class TextPrint:
   def __init__(self, screen, cfg, font_cfg):
     self.screen = screen
     self.cfg = cfg
+    self.font_cfg = font_cfg
     self.x = 0
     self.y = 0
     self.font = pygame.font.SysFont(font_cfg.Font.name, font_cfg.Font.size)
@@ -26,9 +27,14 @@ class TextPrint:
       self.y += self.line_height
 
 
+  def set_color(self, color):
+    self.color = color
+
+
   def reset(self):
     self.x = 0
     self.y = 0
+    self.color = self.font_cfg.Color.normal
 
 
   def jump(self, amount=10):
