@@ -347,8 +347,10 @@ class Config:
         print(f"    - Descargando {url}")
         http_response = urllib.request.urlopen(url)
         if http_response.status == requests.codes.ok:
-          print(f"    - Eliminando recursos antiguos")
-          shutil.rmtree(folder)
+          if  os.path.isdir(folder):
+            print(f"    - Eliminando recursos antiguos")
+            shutil.rmtree(folder)
+          print(f"    - Descomprimiendo nuevos recursos")
           z = zipfile.ZipFile(io.BytesIO(http_response.read()))
           z.extractall(Config.App.data_folder)
         else:
