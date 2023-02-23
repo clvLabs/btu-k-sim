@@ -267,17 +267,20 @@ class Config:
       _zip = Config.App.data_folder / f"{resource_type}.zip"
       if not os.path.isdir(_folder):
         print(f"AVISO: {_folder} no existe, descomprimiendo .ZIP...")
+
         if not os.path.isfile(_zip):
           print(f"ERROR: No existe [{_zip}]")
           print(f"Intentando descargar actualizaciones")
           if not Config.apply_resource_updates():
             sys.exit(1)
+          # Already downloaded last resources, don't need to extract anything more...
+          return
 
         try:
           with zipfile.ZipFile(_zip, 'r') as z:
             z.extractall(Config.App.data_folder)
         except Exception as e:
-          print(f"ERROR abriendo [{_zip}]: {e}")
+          print(f"ERROR descomprimiendo [{_zip}]: {e}")
           sys.exit(1)
 
     _extract_zip("instruments")
