@@ -410,7 +410,10 @@ class Config:
   @staticmethod
   def init():
     print("- Inicializando configuración")
-    Config.App.run_folder = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parent
+    if os.name == "nt":
+      Config.App.run_folder = pathlib.Path(os.getcwd())
+    else:
+      Config.App.run_folder = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parent
 
     # "trick" for py2exe compatibility
     if Config.App.run_folder.parts[-1] == "library.zip":

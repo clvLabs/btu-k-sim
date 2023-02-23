@@ -9,8 +9,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# py2exe stuff
+# pyinstaller stuff
 /build
 /dist
-/py2exe/__pycache__
-*.egg-info/
+*.spec
