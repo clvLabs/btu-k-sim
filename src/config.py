@@ -415,10 +415,6 @@ class Config:
     else:
       Config.App.run_folder = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parent
 
-    # "trick" for py2exe compatibility
-    if Config.App.run_folder.parts[-1] == "library.zip":
-      Config.App.run_folder = Config.App.run_folder.parent
-
     Config.App.data_folder = Config.App.run_folder / "data"
 
     print(f"  - Ejecutando desde: {Config.App.run_folder}")
