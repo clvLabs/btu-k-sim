@@ -1,15 +1,18 @@
 from distutils.core import setup
-import py2exe
 import os
+import pathlib
+import py2exe
 
 from src.config import Config
 
-THIS_PATH = os.path.dirname(os.path.abspath(__file__))
+THIS_PATH = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
 DATA_FILES = [
-  ('data', f'{THIS_PATH}/data/instruments.version'),
-  ('data', f'{THIS_PATH}/data/instruments.zip'),
-  ('data', f'{THIS_PATH}/data/scores.version'),
-  ('data', f'{THIS_PATH}/data/scores.zip'),
+  ('data', [
+    str(THIS_PATH / 'data/instruments.version'),
+    str(THIS_PATH / 'data/instruments.zip'),
+    str(THIS_PATH / 'data/scores.version'),
+    str(THIS_PATH / 'data/scores.zip'),
+  ])
 ]
 
 setup(
