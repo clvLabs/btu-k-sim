@@ -62,10 +62,23 @@ Cuando está activo el modo `jam`:
 * Los indicadores de posición y conteo de compases/frases no se reinician al llegar al final de la sección.
 * Los cambios de sección se hacen _programados_, en vez de cambiar directamente esperan al final de sección/compás.
 
+## Instalación
+
+Una vez instalado el programa, hasta que no se configure un link para actualizaciones, el programa dará un error:
+
+```log
+Intentando descargar actualizaciones
+- Descargando actualizaciones de recursos
+  - No hay actualizaciones disponibles
+```
+
+Al haber ejecutado como mínimo una vez el programa, se habrá creado el archivo `config.yml` y se podrá editar para añadir el link de actualizaciones.
 
 ## Configuración
 
-El fichero `config.yml` será creado si no existe en la primera ejecución.
+En la misma carpeta donde se encuentra el programa está el archivo `config.yml`.
+
+Este archivo se puede modificar para cambiar algunos valores de configuración.
 
 ### config.yml
 
