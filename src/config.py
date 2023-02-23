@@ -1,11 +1,12 @@
 import os
 import sys
 import glob
+import pathlib
+import shutil
 import yaml
 import urllib
 import io
 import requests
-import shutil
 import zipfile
 import pygame
 
@@ -19,6 +20,7 @@ class Config:
     name = "btu-k-sim"
     version = "0.1"
     run_folder = ""
+    data_folder = ""
 
   class AutoUpdate:
     update_link = ""
@@ -125,7 +127,7 @@ class Config:
 
   @staticmethod
   def _load_yaml():
-    config_file = f"{Config.App.run_folder}/config.yml"
+    config_file = Config.App.run_folder / "config.yml"
     print(f"- Leyendo archivo de configuración [{config_file}]")
 
     if not os.path.isfile(config_file):
@@ -143,7 +145,7 @@ class Config:
 
   @staticmethod
   def _write_yaml():
-    config_file = f"{Config.App.run_folder}/config.yml"
+    config_file = Config.App.run_folder / "config.yml"
     print(f"- Escribiendo archivo de configuración [{config_file}]")
 
     data = {
@@ -162,7 +164,7 @@ class Config:
 
   @staticmethod
   def _load_instruments():
-    instruments_file = f"{Config.App.run_folder}/data/instruments/instruments.yml"
+    instruments_file = Config.App.data_folder / "instruments/instruments.yml"
     print(f"- Cargando configuración de instrumentos [{instruments_file}]")
 
     if not os.path.isfile(instruments_file):
@@ -182,7 +184,9 @@ class Config:
 
   @staticmethod
   def _load_scores():
-    score_list = glob.glob(f'{Config.App.run_folder}/data/scores/*.yml')
+    scores_pattern = str(Config.App.data_folder / "scores/*.yml")
+    score_list = glob.glob(scores_pattern)
+
     print(f"- Abriendo partituras yml")
 
     for score_file in sorted(score_list):
@@ -219,7 +223,7 @@ class Config:
       if type(sample) is pygame.mixer.Sound:
         continue
       if sample not in Config.Simulator.Samples.items:
-        sample_path = f"{Config.App.run_folder}/data/instruments/samples/{sample}"
+        sample_path = Config.App.data_folder / f"instruments/samples/{sample}"
         print(f"  - Sample [{sample_path}]")
         try:
           Config.Simulator.Samples.items[sample] = pygame.mixer.Sound(sample_path)
@@ -257,11 +261,10 @@ class Config:
   @staticmethod
   def _check_resource_folders():
     print(f"- Comprobando carpetas de recursos")
-    data_folder = f"{Config.App.run_folder}/data"
 
     def _extract_zip(resource_type):
-      _folder = f"{data_folder}/{resource_type}"
-      _zip = f"{data_folder}/{resource_type}.zip"
+      _folder = f"{Config.App.data_folder}/{resource_type}"
+      _zip = f"{Config.App.data_folder}/{resource_type}.zip"
       if not os.path.isdir(_folder):
         print(f"AVISO: {_folder} no existe, descomprimiendo .ZIP...")
         if not os.path.isfile(_zip):
@@ -272,7 +275,7 @@ class Config:
 
         try:
           with zipfile.ZipFile(_zip, 'r') as z:
-            z.extractall(data_folder)
+            z.extractall(Config.App.data_folder)
         except Exception as e:
           print(f"ERROR abriendo [{_zip}]: {e}")
           sys.exit(1)
@@ -284,10 +287,9 @@ class Config:
   @staticmethod
   def _check_resource_updates():
     print(f"- Comprobando actualizaciones de recursos")
-    data_folder = f"{Config.App.run_folder}/data"
 
     def _get_local_version(resource_type):
-      _version_file = f"{Config.App.run_folder}/data/{resource_type}.version"
+      _version_file = Config.App.data_folder / f"{resource_type}.version"
       try:
         with open(_version_file) as f:
           version = f.read().replace('\n','').strip()
@@ -332,7 +334,6 @@ class Config:
   @staticmethod
   def apply_resource_updates():
     print(f"- Descargando actualizaciones de recursos")
-    data_folder = f"{Config.App.run_folder}/data"
 
     if not Config.AutoUpdate.update_available():
       print(f"  - No hay actualizaciones disponibles")
@@ -349,7 +350,7 @@ class Config:
           print(f"    - Eliminando recursos antiguos")
           shutil.rmtree(folder)
           z = zipfile.ZipFile(io.BytesIO(http_response.read()))
-          z.extractall(data_folder)
+          z.extractall(Config.App.data_folder)
         else:
           raise Exception(f"Error HTTP {http_response.status}")
       except Exception as e:
@@ -393,6 +394,8 @@ class Config:
   @staticmethod
   def init():
     print("- Inicializando configuración")
+    Config.App.run_folder = pathlib.Path(os.path.dirname(os.path.abspath(__file__))) / ".."
+    Config.App.data_folder = Config.App.run_folder / "data"
 
     # Overwrite configuration values from yaml file
     Config._load_yaml()

@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-from os.path import dirname, abspath
 import argparse
 import importlib
 import src.config
@@ -15,7 +14,6 @@ args = parser.parse_args()
 finished = False
 
 while not finished:
-  src.config.Config.App.run_folder = dirname(abspath(__file__))
   sim = src.simulator.Simulator(src.config.Config)
 
   if args.play:
