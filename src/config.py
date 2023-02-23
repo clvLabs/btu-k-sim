@@ -266,7 +266,9 @@ class Config:
         print(f"AVISO: {_folder} no existe, descomprimiendo .ZIP...")
         if not os.path.isfile(_zip):
           print(f"ERROR: No existe [{_zip}]")
-          sys.exit(1)
+          print(f"Intentando descargar actualizaciones")
+          if not Config.apply_resource_updates():
+            sys.exit(1)
 
         try:
           with zipfile.ZipFile(_zip, 'r') as z:
