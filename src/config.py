@@ -346,16 +346,25 @@ class Config:
     def _update_resource(resource_type):
       url = f"{Config.AutoUpdate.update_link}/{resource_type}.zip"
       folder = Config.App.data_folder / resource_type
+      zip_path = Config.App.data_folder / f"{resource_type}.zip"
       try:
         print(f"    - Descargando {url}")
         http_response = urllib.request.urlopen(url)
         if http_response.status == requests.codes.ok:
-          if  os.path.isdir(folder):
-            print(f"    - Eliminando recursos antiguos")
-            shutil.rmtree(folder)
+          print(f"    - Eliminando recursos antiguos")
+          try:
+            if os.path.isdir(folder):
+              shutil.rmtree(folder)
+            if os.path.isfile(zip_path):
+              os.remove(zip_path)
+          except Exception as e:
+            print(f"AVISO: error eliminando recursos ({e})")
+
           print(f"    - Descomprimiendo nuevos recursos")
           z = zipfile.ZipFile(io.BytesIO(http_response.read()))
           z.extractall(Config.App.data_folder)
+          print(f"    - Grabando archivo .zip")
+          io.BytesIO
         else:
           raise Exception(f"Error HTTP {http_response.status}")
       except Exception as e:
