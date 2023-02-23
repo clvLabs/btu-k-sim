@@ -350,23 +350,25 @@ class Config:
       try:
         print(f"    - Descargando {url}")
         http_response = urllib.request.urlopen(url)
-        if http_response.status == requests.codes.ok:
-          print(f"    - Eliminando recursos antiguos")
-          try:
-            if os.path.isdir(folder):
-              shutil.rmtree(folder)
-            if os.path.isfile(zip_path):
-              os.remove(zip_path)
-          except Exception as e:
-            print(f"AVISO: error eliminando recursos ({e})")
-
-          print(f"    - Descomprimiendo nuevos recursos")
-          z = zipfile.ZipFile(io.BytesIO(http_response.read()))
-          z.extractall(Config.App.data_folder)
-          print(f"    - Grabando archivo .zip")
-          io.BytesIO
-        else:
+        if http_response.status != requests.codes.ok:
           raise Exception(f"Error HTTP {http_response.status}")
+
+        print(f"    - Eliminando recursos antiguos")
+        try:
+          if os.path.isdir(folder):
+            shutil.rmtree(folder)
+          if os.path.isfile(zip_path):
+            os.remove(zip_path)
+        except Exception as e:
+          print(f"AVISO: error eliminando recursos ({e})")
+
+        print(f"    - Descomprimiendo nuevos recursos")
+        zip_bytes = io.BytesIO(http_response.read())
+        z = zipfile.ZipFile(zip_bytes)
+        z.extractall(Config.App.data_folder)
+        print(f"    - Grabando archivo .zip")
+        with open(zip_path, "wb") as f:
+          f.write(zip_bytes.getbuffer())
       except Exception as e:
         print(f"AVISO: no se pudo cargar {url} ({e})")
         return False
