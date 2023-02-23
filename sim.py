@@ -1,23 +1,32 @@
 #!/usr/bin/python3
 from os.path import dirname, abspath
 import argparse
-from src.config import Config
-from src.simulator import Simulator
+import importlib
+import src.config
+import src.simulator
 
-Config.App.run_folder = dirname(abspath(__file__))
-
-print(f"{Config.App.name} v{Config.App.version}")
+print(f"{src.config.Config.App.name} v{src.config.Config.App.version}")
 
 # Read arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('-p', '--play', help='Automatically start playing.', action='store_true', default=False)
 args = parser.parse_args()
 
-sim = Simulator(Config)
+finished = False
 
-if args.play:
-  sim.playing = True
+while not finished:
+  src.config.Config.App.run_folder = dirname(abspath(__file__))
+  sim = src.simulator.Simulator(src.config.Config)
 
-sim.run()
+  if args.play:
+    sim.playing = True
+
+  sim.run()
+
+  if sim.need_update_restart:
+    print("- Reiniciando simulador")
+    importlib.reload(src.config)
+  else:
+    finished = True
 
 print("Hasta la próxima!")

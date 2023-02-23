@@ -147,6 +147,7 @@ class Simulator:
 
     if self.cfg.apply_resource_updates():
       self.need_update_restart = True
+      self.running = False
 
 
   def check_user_events(self):
