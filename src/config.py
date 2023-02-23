@@ -78,8 +78,8 @@ class Config:
         size = 20
 
       class Color:
-        normal = "#777777"
-        highlight = "#FAFAFA"
+        normal = "#FAFAFA"
+        highlight = "#EEEE00"
         title = "#00AA00"
 
     class ScoreText:

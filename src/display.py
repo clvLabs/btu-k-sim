@@ -39,7 +39,6 @@ class Display:
 
 
   def show_help(self):
-    self.header_txt.set_color(self.cfg.Display.HeaderText.Color.highlight)
     self.header_txt.indent(self.margin)
     self.header_txt.jump(self.margin)
 
@@ -96,7 +95,7 @@ class Display:
     self.show_metronome_line()
     self.score_txt.print()
 
-    track_list = self.sim.score.tracks.keys()
+    track_list = list(self.sim.score.tracks.keys())
     if self.sim.inverted_tracks:
       track_list = reversed(track_list)
 
