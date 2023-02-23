@@ -96,3 +96,11 @@ simulator:
 * `simulator`:
   * `default_bpm`: BPM por defecto.
   * `bpm_increment`: Incremento a usar al cambiar BPM.
+
+## Desarrollo
+
+Para crear un `.zip` con los archivos necesarios para funcionar en Windows, ejecutar desde la carpeta de proyecto:
+
+```log
+> python .\scripts\pack-windows-exe.py
+```
