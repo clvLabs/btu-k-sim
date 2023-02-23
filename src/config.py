@@ -342,7 +342,7 @@ class Config:
 
     def _update_resource(resource_type):
       url = f"{Config.AutoUpdate.update_link}/{resource_type}.zip"
-      folder = f"{Config.App.run_folder}/data/{resource_type}"
+      folder = Config.App.data_folder / resource_type
       try:
         print(f"    - Descargando {url}")
         http_response = urllib.request.urlopen(url)
@@ -362,7 +362,7 @@ class Config:
 
 
     def _update_local_version(resource_type, version):
-      _version_file = f"{Config.App.run_folder}/data/{resource_type}.version"
+      _version_file = Config.App.data_folder / f"{resource_type}.version"
       try:
         with open(_version_file, "w") as f:
           f.write(version)
