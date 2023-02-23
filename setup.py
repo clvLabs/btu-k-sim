@@ -17,6 +17,6 @@ setup(
   version=Config.App.version,
   description="Asistente avanzado de batukación",
   requires=['pygame', 'pyyaml'],
-  console=['sim.py'],
+  console=['btu-k-sim.py'],
   data_files=DATA_FILES,
   )
