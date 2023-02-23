@@ -1,0 +1,16 @@
+# Local dev stuff
+local/
+
+# Local config
+config.yml
+
+# Python temp stuff
+__pycache__/
+*.py[cod]
+*$py.class
+
+# py2exe stuff
+/build
+/dist
+/py2exe/__pycache__
+*.egg-info/
