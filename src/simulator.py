@@ -147,19 +147,25 @@ class Simulator:
 
     if self.cfg.apply_resource_updates():
       self.need_update_restart = True
-      self.running = False
+
+
+  def close(self):
+    # No restarting until it works... :)
+    self.need_update_restart = False
+    self.running = False
+
 
 
   def check_user_events(self):
     for event in pygame.event.get():
 
-      if event.type == pygame.QUIT: self.running = False
+      if event.type == pygame.QUIT: self.close()
 
       elif event.type == pygame.KEYDOWN:
         _mods = pygame.key.get_mods()
 
-        if event.key == pygame.K_ESCAPE:      self.running = False
-        elif event.key == pygame.K_q:         self.running = False
+        if event.key == pygame.K_ESCAPE:      self.close()
+        elif event.key == pygame.K_q:         self.close()
 
         elif event.key == pygame.K_h:         self.display.toggle_help()
 

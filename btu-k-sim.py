@@ -28,6 +28,7 @@ while not finished:
   if sim.need_update_restart:
     print("- Reiniciando simulador")
     importlib.reload(src.config)
+    importlib.reload(src.simulator)
   else:
     finished = True
 

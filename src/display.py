@@ -125,6 +125,9 @@ class Display:
     if self.cfg.AutoUpdate.update_available():
       _warning_str += "[ ACTUALIZACION DISPONIBLE! PULSA w ] "
 
+    if self.sim.need_update_restart:
+      _warning_str += "[ REINICIA PARA APLICAR ACTUALIZACIÓN ] "
+
     txt = f"{self.cfg.App.name} v{self.cfg.App.version} [h:ayuda] {_warning_str} "
     _txt_after_active = ""
     _txt_before_active = ""
