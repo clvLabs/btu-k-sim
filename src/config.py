@@ -79,7 +79,7 @@ class Config:
 
       class Color:
         normal = "#FAFAFA"
-        highlight = "#C80000"
+        highlight = "#FF8822"
         title = "#00AA00"
 
     class ScoreText:
