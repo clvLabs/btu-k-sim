@@ -65,7 +65,7 @@ class Display:
     self.header_txt.print("| m              | mute (TODAS)          |                                                            ")
     self.header_txt.print("| +              | más BPM               |    * Usando la tecla CTRL se hace que la sección entre al  ")
     self.header_txt.print("| -              | menos BPM             |     próximo cambio de compás.                              ")
-    self.header_txt.print("| j              | modo _jam_            |                                                            ")
+    self.header_txt.print("| j              | modo 'jam'            |                                                            ")
     self.header_txt.print("| t              | metrónomo             |    * Se pueden acumular secciones programadas y hacer una  ")
     self.header_txt.print("| w              | actualizar part.      |    canción pulsando una secuencia de teclas.               ")
     self.header_txt.print("| SHIFT++        | más BPM (*2)          |")
