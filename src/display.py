@@ -211,6 +211,8 @@ class Display:
 
 
   def show_jam_timeline(self, jam_pos):
+    jam_pos += 1  # Also display next note to be played
+
     _n16 = (jam_pos % 4) + 1
     _n4 = (math.floor(jam_pos / 4)) + 1
     _bar = (math.floor(jam_pos / 4 / 4) + 1) % 4
