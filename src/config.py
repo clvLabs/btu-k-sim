@@ -54,6 +54,7 @@ class Config:
   class Simulator:
     instruments = {}
     scores = {}
+    performance_scores = {}
     bpm = 100
     bpm_increment = 5
     metronome_instrument = "MT"
@@ -201,8 +202,8 @@ class Config:
           Config.Simulator.scores[name] = _score
 
           perf_name = f"*{name}*"
-          print(f"    - Creando versión \"de concierto\" [{perf_name}]")
-          Config.Simulator.scores[perf_name] = Score.create_performance_version(Config, _score, perf_name)
+          print(f"    - Creando versión \"de bolo\" [{perf_name}]")
+          Config.Simulator.performance_scores[perf_name] = Score.create_performance_version(Config, _score, perf_name)
 
       except Exception as e:
         print(f"ERROR cargando partitura [{score_file}]: {e}")

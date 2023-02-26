@@ -45,17 +45,26 @@ class Simulator:
     self.playing = False
     self.muted = False
     self.metronome_active = False
+    self.performance_active = False
     self.need_update_restart = False
 
 
   @property
+  def scores(self):
+    if self.performance_active:
+      return self.cfg_sim.performance_scores
+    else:
+      return self.cfg_sim.scores
+
+
+  @property
   def score(self):
-    name = list(self.cfg_sim.scores.keys())[self.score_index]
-    return self.cfg_sim.scores[name]
+    name = list(self.scores.keys())[self.score_index]
+    return self.scores[name]
 
 
   def select_score(self, index):
-    if -1 < index < len(self.cfg_sim.scores):
+    if -1 < index < len(self.scores):
       self.score_index = index
       self.score.reset_section()
       self.score.reset_pos()
@@ -67,7 +76,7 @@ class Simulator:
   def prev_score(self):
     self.score_index -= 1
     if self.score_index < 0:
-      self.score_index = len(self.cfg_sim.scores)-1
+      self.score_index = len(self.scores)-1
     self.score.reset_section()
     self.score.reset_pos()
     if not self.jam_mode:
@@ -78,7 +87,7 @@ class Simulator:
 
 
   def next_score(self):
-    self.score_index = (self.score_index + 1) % len(self.cfg_sim.scores)
+    self.score_index = (self.score_index + 1) % len(self.scores)
     self.score.reset_section()
     self.score.reset_pos()
     if not self.jam_mode:
@@ -124,7 +133,7 @@ class Simulator:
   def reset_all(self):
     self.jam_pos = 0
     self.jam_time = 0
-    for score in self.cfg_sim.scores.values():
+    for score in self.scores.values():
       score.reset_all_sections()
 
 
@@ -176,6 +185,7 @@ class Simulator:
         elif event.key == pygame.K_m:         self.muted = not self.muted
 
         elif event.key == pygame.K_t:         self.metronome_active = not self.metronome_active
+        elif event.key == pygame.K_b:         self.performance_active = not self.performance_active
 
         elif event.key == pygame.K_i:         self.inverted_tracks = not self.inverted_tracks
 

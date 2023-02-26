@@ -57,30 +57,31 @@ class Display:
     self.header_txt.print("| UP             | anterior sección      |    | CTRL+SHIFT+1...0 | ir a sección (compás) (+10)       |")
     self.header_txt.print("| DOWN           | siguiente sección     |    | BACKSPACE        | Eliminar última sección preparada |")
     self.header_txt.print("| PAGE_UP        | anterior partitura    |                                                            ")
-    self.header_txt.print("| PAGE_DOWN      | siguiente partitura   |    NOTAS sobre el modo 'jam':                              ")
+    self.header_txt.print("| PAGE_DOWN      | siguiente partitura   |    --------------------------------------------------------")
     self.header_txt.print("| 1...0          | ir a sección          |                                                            ")
-    self.header_txt.print("| SHIFT+1...0    | ir a sección (+10)    |    * En modo 'jam', al hacer un cambio de sección, en vez  ")
-    self.header_txt.print("| F1...F12       | mute de una pista     |     de hacer el cambio directamente se espera al final     ")
-    self.header_txt.print("| SHIFT+F1...F12 | solo de una pista     |     de la sección para hacer el cambio automáticamente.    ")
-    self.header_txt.print("| m              | mute (TODAS)          |                                                            ")
-    self.header_txt.print("| +              | más BPM               |    * Usando la tecla CTRL se hace que la sección entre al  ")
-    self.header_txt.print("| -              | menos BPM             |     próximo cambio de compás.                              ")
-    self.header_txt.print("| j              | modo 'jam'            |                                                            ")
-    self.header_txt.print("| t              | metrónomo             |    * Se pueden acumular secciones programadas y hacer una  ")
-    self.header_txt.print("| w              | actualizar part.      |    canción pulsando una secuencia de teclas.               ")
-    self.header_txt.print("| SHIFT++        | más BPM (*2)          |")
-    self.header_txt.print("| SHIFT+-        | menos BPM (*2)        |")
-    self.header_txt.print("| ALT++          | más BPM (+1)          |")
-    self.header_txt.print("| ALT+-          | menos BPM (-1)        |")
-    self.header_txt.print("| i              | invertir pistas       |")
-    self.header_txt.print("| r              | reset sección         |")
-    self.header_txt.print("| R              | reset TODAS           |")
-    self.header_txt.print("| LEFT           | 1 1/4 izquierda       |")
-    self.header_txt.print("| RIGHT          | 1 1/4 derecha         |")
-    self.header_txt.print("| SHIFT+LEFT     | 1 1/16 izquierda      |")
-    self.header_txt.print("| SHIFT+RIGHT    | 1 1/16 derecha        |")
-    self.header_txt.print("| HOME           | inicio de sección     |")
-    self.header_txt.print("| END            | fin de sección        |")
+    self.header_txt.print("| SHIFT+1...0    | ir a sección (+10)    |    NOTAS sobre el modo 'jam':                              ")
+    self.header_txt.print("| F1...F12       | mute de una pista     |                                                            ")
+    self.header_txt.print("| SHIFT+F1...F12 | solo de una pista     |    * En modo 'jam', al hacer un cambio de sección, en vez  ")
+    self.header_txt.print("| m              | mute (TODAS)          |     de hacer el cambio directamente se espera al final     ")
+    self.header_txt.print("| +              | más BPM               |     de la sección para hacer el cambio automáticamente.    ")
+    self.header_txt.print("| -              | menos BPM             |                                                            ")
+    self.header_txt.print("| j              | modo 'jam'            |    * Usando la tecla CTRL se hace que la sección entre al  ")
+    self.header_txt.print("| b              | modo 'bolo'           |     próximo cambio de compás.                              ")
+    self.header_txt.print("| t              | metrónomo             |                                                            ")
+    self.header_txt.print("| w              | actualizar part.      |    * Se pueden acumular secciones programadas y hacer una  ")
+    self.header_txt.print("| SHIFT++        | más BPM (*2)          |    canción pulsando una secuencia de teclas.               ")
+    self.header_txt.print("| SHIFT+-        | menos BPM (*2)        |                                                            ")
+    self.header_txt.print("| ALT++          | más BPM (+1)          |    --------------------------------------------------------")
+    self.header_txt.print("| ALT+-          | menos BPM (-1)        |                                                            ")
+    self.header_txt.print("| i              | invertir pistas       |    NOTAS sobre el modo 'bolo':                             ")
+    self.header_txt.print("| r              | reset sección         |                                                            ")
+    self.header_txt.print("| R              | reset TODAS           |    En modo 'bolo' el simulador combina las partes de cada  ")
+    self.header_txt.print("| LEFT           | 1 1/4 izquierda       |    partitura para generar 'frases completas':              ")
+    self.header_txt.print("| RIGHT          | 1 1/4 derecha         |                                                            ")
+    self.header_txt.print("| SHIFT+LEFT     | 1 1/16 izquierda      |    * Cuadra a 4 compases todas las secciones.              ")
+    self.header_txt.print("| SHIFT+RIGHT    | 1 1/16 derecha        |    * Combina todas las bases con todas las variaciones.    ")
+    self.header_txt.print("| HOME           | inicio de sección     |    * Añade marcas del director para los cambios.           ")
+    self.header_txt.print("| END            | fin de sección        |                                                            ")
 
 
   def show_sim_UI(self):
@@ -132,7 +133,7 @@ class Display:
     _txt_after_active = ""
     _txt_before_active = ""
     _txt_before_scores = txt
-    for score in self.cfg.Simulator.scores.values():
+    for score in self.sim.scores.values():
       if score == self.sim.score:
         _txt_before_active = txt
         txt += f"[{score.name}] "
@@ -161,12 +162,13 @@ class Display:
     self.header_txt.print(_txt_after_active, newLine=False, color=self.cfg.Display.HeaderText.Color.highlight)
     self.header_txt.print(_txt_before_active)
 
-    _mute_str = "[MUTE]" if self.sim.muted else ''
-    _metronome_str = "[METRÓNOMO]" if self.sim.metronome_active else ''
+    _performance_str = "[BOLO] " if self.sim.performance_active else ''
+    _mute_str = "[MUTE] " if self.sim.muted else ''
+    _metronome_str = "[METRÓNOMO] " if self.sim.metronome_active else ''
 
     _jam_str = ""
     if self.sim.jam_mode:
-      _jam_str = f"[JAM {self.format_time(self.sim.jam_time)}]"
+      _jam_str = f"[JAM {self.format_time(self.sim.jam_time)}] "
 
     _prep_str = ""
     if self.sim.prepared_section is not None:
@@ -180,12 +182,12 @@ class Display:
           _section_name = self.sim.score.get_section(_section_index).name
           _prep_str += f"{_section_index+1}->"
         _prep_str = _prep_str[:-2]
-      _prep_str += "]"
+      _prep_str += "] "
 
 
     txt = f"{self.sim.bpm} bpm" + \
           f" - Pos: {_phrase}.{_bar}.{_n4}.{_n16}" + \
-          f" {_mute_str} {_metronome_str} {_jam_str} {_prep_str}"
+          f" {_performance_str}{_mute_str}{_metronome_str}{_jam_str}{_prep_str}"
 
     self.header_txt.print(txt)
     self.header_txt.print("─"*200)
