@@ -80,7 +80,7 @@ class Performance:
     retval = {k:Performance._pad_track(v, PHRASE_LEN, False) for (k,v) in section.items()}
 
     # Director's track (ONLY if not empty)
-    if not retval[cfg.Simulator.director_instrument]:
+    if not retval[cfg.Simulator.director_instrument].strip():
       if num_bars == 1:
         retval[cfg.Simulator.director_instrument] = f"{EMPTY_BAR}{EMPTY_BAR}{DIRECTOR_INTRO}{EMPTY_BAR}"
       elif num_bars == 2:
