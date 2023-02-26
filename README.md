@@ -12,20 +12,20 @@ Asistente avanzado de _batukación_
 |---|---|
 |ESC / q|salir|
 |h|mostrar/ocultar ayuda|
-|SPACE|play/pause|
+|SPACE|`play`/`pause`|
 |UP|anterior sección|
 |DOWN|siguiente sección|
 |PAGE_UP|anterior partitura|
 |PAGE_DOWN|siguiente partitura|
 |1...0|ir a sección|
 |SHIFT+1...0|ir a sección (+10)|
-|F1...F12|mute de una pista|
-|SHIFT+F1...F12|solo de una pista|
-|m|mute (TODAS las pistas)|
+|F1...F12|`mute` de una pista|
+|SHIFT+F1...F12|`solo` de una pista|
+|m|`mute` (TODAS las pistas)|
 |+|más BPM|
 |-|menos BPM|
-|j|modo _jam_|
-|b|modo _bolo_|
+|j|modo `jam`|
+|b|modo `bolo`|
 |t|metrónomo|
 |w|actualizar instrumentos/partituras|
 
@@ -33,13 +33,13 @@ Asistente avanzado de _batukación_
 
 |Tecla|Función|
 |---|---|
-|SHIFT++|más BPM (*2)|
-|SHIFT+-|menos BPM (*2)|
-|ALT++|más BPM (+1)|
-|ALT+-|menos BPM (-1)|
+|SHIFT++|más `BPM` (*2)|
+|SHIFT+-|menos `BPM` (*2)|
+|ALT++|más `BPM` (+1)|
+|ALT+-|menos `BPM` (-1)|
 |i|invertir orden de pistas|
-|r|reset mute/solo/posición sección|
-|R|reset mute/solo/posición TODAS las partituras|
+|r|reset `mute`/`solo`/posición sección|
+|R|reset `mute`/`solo`/posición TODAS las partituras|
 |LEFT|mover cursor 1 negra izquierda|
 |RIGHT|mover cursor 1 negra derecha|
 |SHIFT+LEFT|mover cursor 1 semicorchea izquierda|
