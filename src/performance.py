@@ -28,6 +28,10 @@ class Performance:
     _bases = {k:v for (k,v) in _sec.items() if re.match(BASE_REGEX, k)}
     _versions = {k:v for (k,v) in _sec.items() if re.match(VERSION_REGEX, k)}
 
+    # Return original sections if no arrangement can be made
+    if not _intro or not _end or not _bases:
+      return raw_sections
+
     new_sections = {}
     new_sections[INTRO_KEY] = Performance._prepare_intro(cfg, _intro)
 
