@@ -51,11 +51,11 @@ Asistente avanzado de _batukación_
 
 |Tecla|Función|
 |---|---|
-|1...0|ir a sección cuando termine la sección actual|
-|SHIFT+1...0|ir a sección (+10) cuando termine la sección actual|
+|`1`...`0`|ir a sección cuando termine la sección actual|
+|`SHIFT`+1...0|ir a sección (+10) cuando termine la sección actual|
 |`CTRL`+1...0|ir a sección cuando termine el compás actual|
-|`CTRL`+SHIFT+1...0|ir a sección (+10) cuando termine el compás actual|
-|BACKSPACE|Eliminar última sección preparada|
+|`CTRL`+`SHIFT`+1...0|ir a sección (+10) cuando termine el compás actual|
+|`BACKSPACE`|Eliminar última sección preparada|
 
 ### Modo `jam`
 
