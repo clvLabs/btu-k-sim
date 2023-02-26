@@ -18,7 +18,7 @@ class Config:
 
   class App:
     name = "btu-k-sim"
-    version = "0.1"
+    version = "0.2"
     run_folder = ""
     data_folder = ""
 
