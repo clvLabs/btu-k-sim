@@ -6,7 +6,7 @@ Asistente avanzado de _batukación_
 
 ### Teclas
 
-Funciones _básicas_:
+#### Funciones _básicas_
 
 |Tecla|Función|
 |---|---|
@@ -25,10 +25,11 @@ Funciones _básicas_:
 |+|más BPM|
 |-|menos BPM|
 |j|modo _jam_|
+|b|modo _bolo_|
 |t|metrónomo|
 |w|actualizar instrumentos/partituras|
 
-Funciones _avanzadas_:
+#### Funciones _avanzadas_
 
 |Tecla|Función|
 |---|---|
@@ -46,7 +47,7 @@ Funciones _avanzadas_:
 |HOME|ir a inicio de sección|
 |END|ir a fin de sección|
 
-Cuando el modo `jam` está activo:
+#### Cuando el modo `jam` está activo
 
 |Tecla|Función|
 |---|---|
@@ -60,20 +61,19 @@ Cuando el modo `jam` está activo:
 
 Cuando está activo el modo `jam`:
 
-* Los indicadores de posición y conteo de compases/frases no se reinician al llegar al final de la sección.
-* Los cambios de sección se hacen _programados_, en vez de cambiar directamente esperan al final de sección/compás.
+* Al hacer un cambio de sección, en vez de hacer el cambio directamente se espera al final de la sección para hacer el cambio automáticamente.
+* Usando la tecla CTRL se hace que la sección entre al próximo cambio de compás.
+* Se pueden acumular secciones programadas y hacer una canción pulsando una secuencia de teclas.
 
-## Instalación
 
-Una vez instalado el programa, hasta que no se configure un link para actualizaciones, el programa dará un error:
+### Modo `bolo`
 
-```log
-Intentando descargar actualizaciones
-- Descargando actualizaciones de recursos
-  - No hay actualizaciones disponibles
-```
+En modo 'bolo' el simulador combina las partes de cada partitura para generar 'frases completas':
 
-Al haber ejecutado como mínimo una vez el programa, se habrá creado el archivo `config.yml` y se podrá editar para añadir el link de actualizaciones.
+* Cuadra a 4 compases todas las secciones.
+* Combina todas las bases con todas las variaciones.
+* Añade marcas del director para los cambios.
+
 
 ## Configuración
 
