@@ -4,7 +4,7 @@ import copy
 
 INTRO_KEY = "intro"
 END_KEY = "fin"
-BASE_REGEX = r"^[bB][0-9]*$"
+BASE_REGEX = r"^[bB](ase)?[0-9]*$"
 VERSION_REGEX = r"^[vV][0-9]*$"
 
 NOTE_LEN = (4)
@@ -79,15 +79,16 @@ class Performance:
 
     retval = {k:Performance._pad_track(v, PHRASE_LEN, False) for (k,v) in section.items()}
 
-    # Director's track
-    if num_bars == 1:
-      retval[cfg.Simulator.director_instrument] = f"{EMPTY_BAR}{EMPTY_BAR}{DIRECTOR_INTRO}{EMPTY_BAR}"
-    elif num_bars == 2:
-      retval[cfg.Simulator.director_instrument] = f"{EMPTY_BAR}{DIRECTOR_INTRO}{EMPTY_BAR}{EMPTY_BAR}"
-    elif num_bars == 3:
-      retval[cfg.Simulator.director_instrument] = f"{DIRECTOR_INTRO}{EMPTY_BAR}{EMPTY_BAR}{EMPTY_BAR}"
-    else:
-      retval[cfg.Simulator.director_instrument] = f"{EMPTY_BAR}{EMPTY_BAR}{EMPTY_BAR}{DIRECTOR_INTRO}"
+    # Director's track (ONLY if not empty)
+    if not retval[cfg.Simulator.director_instrument]:
+      if num_bars == 1:
+        retval[cfg.Simulator.director_instrument] = f"{EMPTY_BAR}{EMPTY_BAR}{DIRECTOR_INTRO}{EMPTY_BAR}"
+      elif num_bars == 2:
+        retval[cfg.Simulator.director_instrument] = f"{EMPTY_BAR}{DIRECTOR_INTRO}{EMPTY_BAR}{EMPTY_BAR}"
+      elif num_bars == 3:
+        retval[cfg.Simulator.director_instrument] = f"{DIRECTOR_INTRO}{EMPTY_BAR}{EMPTY_BAR}{EMPTY_BAR}"
+      else:
+        retval[cfg.Simulator.director_instrument] = f"{EMPTY_BAR}{EMPTY_BAR}{EMPTY_BAR}{DIRECTOR_INTRO}"
 
     return retval
 
