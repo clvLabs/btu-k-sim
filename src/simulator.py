@@ -282,6 +282,9 @@ class Simulator:
           # <CTRL> pressed
           #
 
+          if   event.key in [pygame.K_PLUS, pygame.K_KP_PLUS]: self.display.change_size_factor(-0.1)
+          elif event.key in [pygame.K_MINUS, pygame.K_KP_MINUS]: self.display.change_size_factor(+0.1)
+
           if self.jam_mode:
             [self.prepare_section(i, 4*4) for (i,k) in enumerate(ALL_NUMKEYS) if k == event.key]
             [self.prepare_section(i, 4*4) for (i,k) in enumerate(ALL_KPNUMKEYS) if k == event.key]
@@ -290,6 +293,9 @@ class Simulator:
           #
           # <CTRL+SHIFT> pressed
           #
+
+          if   event.key in [pygame.K_PLUS, pygame.K_KP_PLUS]: self.display.change_size_factor(-0.3)
+          elif event.key in [pygame.K_MINUS, pygame.K_KP_MINUS]: self.display.change_size_factor(+0.3)
 
           if self.jam_mode:
             [self.prepare_section(i+10, 4*4) for (i,k) in enumerate(ALL_NUMKEYS) if k == event.key]

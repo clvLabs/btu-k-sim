@@ -8,15 +8,23 @@ class Display:
   def __init__(self, sim):
     self.sim = sim
     self.cfg = sim.cfg
+    self.update_size_factor()
+    pygame.display.set_caption(f"Btu-K simulator")
+    self.help_active = False
 
+
+  def change_size_factor(self, change):
+    self.cfg.Display.size_factor += change
+    self.cfg.Display.update_size_factor()
+    self.update_size_factor()
+
+
+  def update_size_factor(self):
     _size = [self.cfg.Display.width, self.cfg.Display.height]
     self.screen = pygame.display.set_mode(_size)
     self.header_txt = TextPrint(self.screen, self.cfg, self.cfg.Display.HeaderText)
     self.score_txt = TextPrint(self.screen, self.cfg, self.cfg.Display.ScoreText)
     self.margin = self.cfg.Display.ScoreText.line_height / 2
-    pygame.display.set_caption(f"Btu-K simulator")
-
-    self.help_active = False
 
 
   def clear(self):
@@ -52,36 +60,36 @@ class Display:
     self.header_txt.print("| Tecla          | Función                |    | Tecla            | Función                           |")
     self.header_txt.print("|----------------|------------------------|    |------------------|-----------------------------------|")
     self.header_txt.print("| ESC / q        | salir                  |    | 1...0            | ir a sección                      |")
-    self.header_txt.print("| h              | mostrar/ocultar ayuda  |    | SHIFT+1...0      | ir a sección (+10)                |")
-    self.header_txt.print("| SPACE          | play/pause             |    | CTRL+1...0       | ir a sección (compás)             |")
-    self.header_txt.print("| UP             | anterior sección       |    | CTRL+SHIFT+1...0 | ir a sección (compás) (+10)       |")
-    self.header_txt.print("| DOWN           | siguiente sección      |    | BACKSPACE        | Eliminar última sección preparada |")
-    self.header_txt.print("| PAGE_UP        | anterior partitura     |                                                            ")
-    self.header_txt.print("| PAGE_DOWN      | siguiente partitura    |    --------------------------------------------------------")
-    self.header_txt.print("| 1...0          | ir a sección           |                                                            ")
-    self.header_txt.print("| SHIFT+1...0    | ir a sección (+10)     |    NOTAS sobre el modo 'jam':                              ")
-    self.header_txt.print("| F1...F12       | mute de un instrumento |                                                            ")
-    self.header_txt.print("| SHIFT+F1...F12 | solo de un instrumento |    * En modo 'jam', al hacer un cambio de sección, en vez  ")
-    self.header_txt.print("| m              | mute (TODAS)           |     de hacer el cambio directamente se espera al final     ")
-    self.header_txt.print("| +              | más BPM                |     de la sección para hacer el cambio automáticamente.    ")
-    self.header_txt.print("| -              | menos BPM              |                                                            ")
-    self.header_txt.print("| j              | modo 'jam'             |    * Usando la tecla CTRL se hace que la sección entre al  ")
-    self.header_txt.print("| b              | modo 'bolo'            |     próximo cambio de compás.                              ")
-    self.header_txt.print("| t              | metrónomo              |                                                            ")
-    self.header_txt.print("| w              | actualizar part.       |    * Se pueden acumular secciones programadas y hacer una  ")
-    self.header_txt.print("| SHIFT++        | más BPM (*2)           |    canción pulsando una secuencia de teclas.               ")
-    self.header_txt.print("| SHIFT+-        | menos BPM (*2)         |                                                            ")
-    self.header_txt.print("| ALT++          | más BPM (+1)           |    --------------------------------------------------------")
-    self.header_txt.print("| ALT+-          | menos BPM (-1)         |                                                            ")
+    self.header_txt.print("| h              | mostrar/ocultar ayuda  |    | SHIFT 1...0      | ir a sección (+10)                |")
+    self.header_txt.print("| SPACE          | play/pause             |    | CTRL 1...0       | ir a sección (compás)             |")
+    self.header_txt.print("| ⬆️ / ⬇️          | cambio sección         |    | CTRL SHIFT 1...0 | ir a sección (compás) (+10)       |")
+    self.header_txt.print("| PAGE_UP / DOWN | cambio partitura       |    | BACKSPACE        | Eliminar última sección preparada |")
+    self.header_txt.print("|                                         |                                                            ")
+    self.header_txt.print("| 1...0          | ir a sección           |    --------------------------------------------------------")
+    self.header_txt.print("| SHIFT 1...0    | ir a sección (+10)     |                                                            ")
+    self.header_txt.print("| ⬅️ / ➡️          | 1 1/4 izda. / dcha.    |    NOTAS sobre el modo 'jam':                              ")
+    self.header_txt.print("| SHIFT ⬅️ / ➡️    | 1 1/16 izda. / dcha.   |                                                            ")
+    self.header_txt.print("| HOME / END     | inicio/fin sección     |    * En modo 'jam', al hacer un cambio de sección, en vez  ")
+    self.header_txt.print("|                                         |     de hacer el cambio directamente se espera al final     ")
+    self.header_txt.print("| + / -          | más/menos BPM (+-5)    |     de la sección para hacer el cambio automáticamente.    ")
+    self.header_txt.print("| SHIFT + / -    | más/menos BPM (+-10)   |                                                            ")
+    self.header_txt.print("| ALT + / -      | más/menos BPM (+-1)    |    * Usando la tecla CTRL se hace que la sección entre al  ")
+    self.header_txt.print("| F1...F12       | mute de un instrumento |     próximo cambio de compás.                              ")
+    self.header_txt.print("| SHIFT F1...F12 | solo de un instrumento |                                                            ")
+    self.header_txt.print("| m              | mute (TODAS)           |    * Se pueden acumular secciones programadas y hacer una  ")
+    self.header_txt.print("| j              | modo 'jam'             |    canción pulsando una secuencia de teclas.               ")
+    self.header_txt.print("| b              | modo 'bolo'            |                                                            ")
+    self.header_txt.print("| t              | metrónomo              |    --------------------------------------------------------")
+    self.header_txt.print("|                                         |                                                            ")
     self.header_txt.print("| i              | invertir instrumentos  |    NOTAS sobre el modo 'bolo':                             ")
     self.header_txt.print("| r              | reset sección          |                                                            ")
     self.header_txt.print("| R              | reset TODAS            |    En modo 'bolo' el simulador combina las partes de cada  ")
-    self.header_txt.print("| LEFT           | 1 1/4 izquierda        |    partitura para generar 'frases completas':              ")
-    self.header_txt.print("| RIGHT          | 1 1/4 derecha          |                                                            ")
-    self.header_txt.print("| SHIFT+LEFT     | 1 1/16 izquierda       |    * Cuadra a 4 compases todas las secciones.              ")
-    self.header_txt.print("| SHIFT+RIGHT    | 1 1/16 derecha         |    * Combina todas las bases con todas las variaciones.    ")
-    self.header_txt.print("| HOME           | inicio de sección      |    * Añade marcas del director para los cambios.           ")
-    self.header_txt.print("| END            | fin de sección         |                                                            ")
+    self.header_txt.print("| w              | actualizar part.       |    partitura para generar 'frases completas':              ")
+    self.header_txt.print("| CTRL + / -     | tamaño ventana +/ (10%)|                                                            ")
+    self.header_txt.print("| CTRL SHIFT +/- | tamaño ventana +/ (30%)|    * Cuadra a 4 compases todas las secciones.              ")
+    self.header_txt.print("|                                         |    * Combina todas las bases con todas las variaciones.    ")
+    self.header_txt.print("|                                         |    * Añade marcas del director para los cambios.           ")
+    self.header_txt.print("|                                         |                                                            ")
 
 
   def show_sim_UI(self):

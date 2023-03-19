@@ -6,55 +6,59 @@ Asistente avanzado de _batukación_
 
 ### Teclas
 
-#### Funciones _básicas_
+#### Acciones _básicas_
 
 |Tecla|Función|
 |---|---|
 |`ESC` / `q`|salir|
 |`h`|mostrar/ocultar ayuda|
 |`SPACE`|`play`/`pause`|
-|`UP`|anterior sección|
-|`DOWN`|siguiente sección|
-|`PAGE_UP`|anterior partitura|
-|`PAGE_DOWN`|siguiente partitura|
-|`1`...`0`|ir a sección|
-|`SHIFT`+`1`...`0`|ir a sección (+10)|
-|`F1`...`F12`|`mute` de un instrumento|
-|`SHIFT`+`F1`...`F12`|`solo` de un instrumento|
-|`m`|`mute` (TODAS los instrumentos)|
-|`+`|más `BPM`|
-|`-`|menos `BPM`|
-|`j`|modo `jam`|
-|`b`|modo `bolo`|
-|`t`|metrónomo|
-|`w`|actualizar instrumentos/partituras|
+|`UP` / `DOWN`|anterior/siguiente sección|
+|`PAGE_UP` / `PAGE_DOWN`|anterior/siguiente partitura|
 
-#### Funciones _avanzadas_
+#### Navegación
 
 |Tecla|Función|
 |---|---|
-|`SHIFT`+`+`|más `BPM` (*2)|
-|`SHIFT`+`-`|menos `BPM` (*2)|
-|`ALT`+`+`|más `BPM` (+1)|
-|`ALT`+`-`|menos `BPM` (-1)|
+|`1`...`0`|ir a sección|
+|`SHIFT` `1`...`0`|ir a sección (+10)|
+|`LEFT` / `RIGHT`|cursor 1 negra izquierda/derecha|
+|`SHIFT` `LEFT` / `RIGHT`|cursor 1 semicorchea izquierda/derecha|
+|`HOME` / `END`|ir a inicio/fin de sección|
+
+#### Control de reproducción
+
+|Tecla|Función|
+|---|---|
+|`+` / `-`|más/menos `BPM` (+-5)|
+|`SHIFT` `+` / `-`|más/menos `BPM` (+-10)|
+|`ALT` `+` / `-`|más/menos `BPM` (+-1)|
+|`F1`...`F12`|`mute` de un instrumento|
+|`SHIFT` `F1`...`F12`|`solo` de un instrumento|
+|`m`|`mute` (TODAS los instrumentos)|
+|`j`|modo `jam`|
+|`b`|modo `bolo`|
+|`t`|metrónomo|
+
+#### Otras acciones
+
+|Tecla|Función|
+|---|---|
 |`i`|invertir orden de instrumentos|
 |`r`|reset `mute`/`solo`/posición sección|
 |`R`|reset `mute`/`solo`/posición TODAS las partituras|
-|`LEFT`|mover cursor 1 negra izquierda|
-|`RIGHT`|mover cursor 1 negra derecha|
-|`SHIFT`+`LEFT`|mover cursor 1 semicorchea izquierda|
-|`SHIFT`+`RIGHT`|mover cursor 1 semicorchea derecha|
-|`HOME`|ir a inicio de sección|
-|`END`|ir a fin de sección|
+|`w`|actualizar instrumentos/partituras|
+|`CTRL` `+` / `-`|tamaño ventana +/- (10%)|
+|`CTRL` `SHIFT` `+` / `-`|tamaño ventana +/- (30%)|
 
 #### Cuando el modo `jam` está activo
 
 |Tecla|Función|
 |---|---|
 |`1`...`0`|ir a sección cuando termine la sección actual|
-|`SHIFT`+1...0|ir a sección (+10) cuando termine la sección actual|
-|`CTRL`+1...0|ir a sección cuando termine el compás actual|
-|`CTRL`+`SHIFT`+1...0|ir a sección (+10) cuando termine el compás actual|
+|`SHIFT` 1...0|ir a sección (+10) cuando termine la sección actual|
+|`CTRL` 1...0|ir a sección cuando termine el compás actual|
+|`CTRL` `SHIFT` 1...0|ir a sección (+10) cuando termine el compás actual|
 |`BACKSPACE`|Eliminar última sección preparada|
 
 ### Modo `jam`
@@ -86,6 +90,8 @@ Este archivo se puede modificar para cambiar algunos valores de configuración.
 ```yml
 auto_udpate:
   update_link: ''
+display:
+  size_factor: 1.0
 simulator:
   bpm_increment: 5
   default_bpm: 100
@@ -93,6 +99,8 @@ simulator:
 
 * `auto_udpate`:
   * `update_link`: Link para actualizaciones automáticas.
+* `display`:
+  * `size_factor`: Factor de _zoom_ de la interface.
 * `simulator`:
   * `default_bpm`: `BPM` por defecto.
   * `bpm_increment`: Incremento a usar al cambiar `BPM`.

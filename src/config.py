@@ -22,6 +22,7 @@ class Config:
     run_folder = ""
     data_folder = ""
 
+
   class AutoUpdate:
     update_link = ""
     @staticmethod
@@ -66,36 +67,73 @@ class Config:
 
 
   class Display:
-    width = 1900
-    height = 1000
+    size_factor = 1.0
+
+    _width_base = 1900
+    width = _width_base
+
+    _height_base = 1000
+    height = _height_base
+
     background_color = "#000000"
+
+
+    @staticmethod
+    def update_size_factor():
+      Config.Display._apply_size_factor()
+      Config._write_yaml()
+
+
+    @staticmethod
+    def _apply_size_factor():
+      Config.Display.width = int(Config.Display._width_base / Config.Display.size_factor)
+      Config.Display.height = int(Config.Display._height_base / Config.Display.size_factor)
+      Config.Display.HeaderText.line_height = int(Config.Display.HeaderText._line_height_base / Config.Display.size_factor)
+      Config.Display.HeaderText.Font.size = int(Config.Display.HeaderText.Font._size_base / Config.Display.size_factor)
+      Config.Display.ScoreText.line_height = int(Config.Display.ScoreText._line_height_base / Config.Display.size_factor)
+      Config.Display.ScoreText.Font.size = int(Config.Display.ScoreText.Font._size_base / Config.Display.size_factor)
+      Config.Display.Timeline.N16.width = int(Config.Display.Timeline.N16._width_base / Config.Display.size_factor)
+      Config.Display.Timeline.N16.height = int(Config.Display.Timeline.N16._height_base / Config.Display.size_factor)
+      Config.Display.Timeline.N16.margin_x = int(Config.Display.Timeline.N16._margin_x_base / Config.Display.size_factor)
+      Config.Display.Timeline.N16.margin_y = int(Config.Display.Timeline.N16._margin_y_base / Config.Display.size_factor)
+      Config.Display.Timeline.N4.width = int(Config.Display.Timeline.N4._width_base / Config.Display.size_factor)
+      Config.Display.Timeline.N4.height = int(Config.Display.Timeline.N4._height_base / Config.Display.size_factor)
+      Config.Display.Timeline.FirstN4.width = int(Config.Display.Timeline.FirstN4._width_base / Config.Display.size_factor)
+      Config.Display.Timeline.FirstN4.height = int(Config.Display.Timeline.FirstN4._height_base / Config.Display.size_factor)
+
 
     class HeaderText:
 
-      line_height = 25
+      _line_height_base = 25
+      line_height = _line_height_base
 
       class Font:
         name = "dejavusansmono"
-        size = 20
+        _size_base = 20
+        size = _size_base
 
       class Color:
         normal = "#FAFAFA"
         highlight = "#FF8822"
         title = "#00AA00"
 
+
     class ScoreText:
 
-      line_height = 45
+      _line_height_base = 45
+      line_height = _line_height_base
 
       class Font:
         name = "dejavusansmono"
-        size = 40
+        _size_base = 40
+        size = _size_base
 
       class Color:
         normal = "#FAFAFA"
         inactive = "#3C3C3C"
         done = "#777777"
         current = "#C80000"
+
 
     class Metronome:
       text = "1---2---3---4---"
@@ -107,19 +145,27 @@ class Config:
       gradient = []
 
       class N16:
-        width = 26
-        height = 50
-        margin_x = 2
-        margin_y = 2
+        _width_base = 26
+        width = _width_base
+        _height_base = 50
+        height = _height_base
+        _margin_x_base = 2
+        margin_x = _margin_x_base
+        _margin_y_base = 2
+        margin_y = _margin_y_base
 
       class N4:
-        width = 5
-        height = 20
+        _width_base = 5
+        width = _width_base
+        _height_base = 20
+        height = _height_base
         color = (  0,   0,   0)
 
       class FirstN4:
-        width = 10
-        height = 20
+        _width_base = 10
+        width = _width_base
+        _height_base = 20
+        height = _height_base
         color = (  0,   0,   0)
 
 
@@ -135,13 +181,30 @@ class Config:
       print("  - El archivo no existe, generando configuración por defecto")
       Config._write_yaml()
 
+    _rewrite_config_file = False
+
+    def _get_yml_value(section, key, default):
+      nonlocal _rewrite_config_file
+      try:
+        return yml[section][key]
+      except Exception:
+        print(f"  - ERROR: valor [{section}][{key}] no encontrado, usando valor por defecto.")
+        _rewrite_config_file = True
+        return default
+
     with open(config_file) as f:
       yml = yaml.load(f, Loader=yaml.SafeLoader)
 
-      Config.AutoUpdate.update_link = yml['auto_update']['update_link']
+      Config.AutoUpdate.update_link = _get_yml_value('auto_update', 'update_link', Config.AutoUpdate.update_link)
 
-      Config.Simulator.bpm = yml['simulator']['default_bpm']
-      Config.Simulator.bpm_increment = yml['simulator']['bpm_increment']
+      Config.Simulator.bpm = _get_yml_value('simulator', 'default_bpm', Config.Simulator.bpm)
+      Config.Simulator.bpm_increment = _get_yml_value('simulator', 'bpm_increment', Config.Simulator.bpm_increment)
+
+      Config.Display.size_factor = _get_yml_value('display', 'size_factor', Config.Display.size_factor)
+
+    # Re-write config file if needed
+    if _rewrite_config_file:
+      Config._write_yaml()
 
 
   @staticmethod
@@ -152,12 +215,15 @@ class Config:
     data = {
       "auto_update": {},
       "simulator": {},
+      "display": {},
     }
 
     data['auto_update']['update_link'] = Config.AutoUpdate.update_link
 
     data['simulator']['default_bpm'] = Config.Simulator.bpm
     data['simulator']['bpm_increment'] = Config.Simulator.bpm_increment
+
+    data['display']['size_factor'] = Config.Display.size_factor
 
     with open(config_file, "w") as f:
       f.write(yaml.dump(data))
@@ -440,3 +506,6 @@ class Config:
 
     # Create timeline gradients from bar hue list
     Config._create_gradients()
+
+    # Apply UI size factor
+    Config.Display._apply_size_factor()
